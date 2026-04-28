@@ -41,14 +41,15 @@
         save,
         setSave
       ] = React.useState(false)
-
+      
+      
       function handleClick(){
         setApplied(!isApplied)
       
       }
 
       const text = isApplied ? 'Aplicado' : 'Aplicar'
-
+      const isAppliedText = isApplied ? 'si' : 'No'
       return (
         <article className='job-listing-card'
         data-modaldad={data?.modalidad}
@@ -57,8 +58,8 @@
         >
           <div>
             <h3>{titulo}</h3>
-            <small>{empresa} - {ubicacion}</small>
-            <p>{descripcion}</p>
+            <small>{empresa} - {ubicacion} - Aplique? {isAppliedText}</small>
+            <p>{descripcion}</p> 
           </div>
           <button onClick={()=>setSave(!save)} >
             {save? 'Saved❤️':'Save🤍'}
