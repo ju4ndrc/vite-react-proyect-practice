@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <title>DevJobs - Empleos</title>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Listado con empleos y filtros para encontrar el trabajo de tus sueños.">
+
+  <link rel="stylesheet" href="./styles.css" />
+
+
+
+<script type="module">
+    import React from "https://esm.sh/react?dev";//nucleo
+    import ReactDOM from "https://esm.sh/react-dom/client?dev";//para renderizar
+    
+    window.React = React
+    window.ReactDOM = ReactDOM
+
+</script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js">
+
+
+</script>
+
+<script type="text/babel">
+    const title = <h1 style={{color : "#09f"}}>Hola , React.js</h1>
+//componente de react
+                    //↓ Las props son como los parametros 
+    function Saludo({name,color}) {
+        return <h2 style={{color:color}}> Hola, {name} </h2>;
+    }
+     function JobCard({ data, titulo, empresa , ubicacion, descripcion}){
+      
+      const [
+        isApplied,
+        setApplied        
+      ] = React.useState(false)
+
+      const [
+        save,
+        setSave
+      ] = React.useState(false)
+
+      function handleClick(){
+        setApplied(!isApplied)
+      
+      }
+
+      const text = isApplied ? 'Aplicado' : 'Aplicar'
+
+      return (
+        <article className='job-listing-card'
+        data-modaldad={data?.modalidad}
+        data-nivel={data?.nivel}
+        data-technology={data?.technology}
+        >
+          <div>
+            <h3>{titulo}</h3>
+            <small>{empresa} - {ubicacion}</small>
+            <p>{descripcion}</p>
+          </div>
+          <button onClick={()=>setSave(!save)} >
+            {save? 'Saved❤️':'Save🤍'}
+            </button>
+          <button 
+            disable = {isApplied}
+            className={`button-apply-job ${isApplied ? 'is-applied' : '' } `}
+            onClick={handleClick}
+          > {text} 
+          </button>
+        </article>
+
+      )
+
+    }
+    function App(){
+        return(
+           <section>
+            <h2>Empleos disponibles</h2>
+            <div className="jobs-listings">
+              <JobCard
+                titulo="Desarrollador Frontend"
+                empresa="Tech Solutions Inc."
+                ubicacion="Remoto"
+                descripcion="..."
+              />
+              <JobCard
+                titulo="Ingeniero de Software Senior"
+                empresa="Data Driven Co."
+                ubicacion="Ciudad de México"
+                descripcion="..."
+              />
+            </div>
+        </section>
+            
+        )
+    }
+
+    const rootEl = document.querySelector('#root')
+    const root = ReactDOM.createRoot(rootEl)
+    root.render(<App/>)
+</script>
+  
+
+<body>
+  <header>
+    <h1>
+      <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="16 18 22 12 16 6"></polyline>
+        <polyline points="8 6 2 12 8 18"></polyline>
+      </svg>
+      DevJobs
+    </h1>
+
+    <nav>
+      <!-- <a href="">
+        Inicio
+      </a> -->
+      <a href="">Empleos</a>
+    </nav>
+
+    <div>
+      <devjobs-avatar service="google" username="google.com" size="32">
+      </devjobs-avatar>
+    </div>
+  </header>
+
+  <main>
+    <section class="jobs-search">
+      <h1>React.js, primeros pasos</h1>
+      <div id="root"></div>
+
+    </section>
+
+    <section>
+      <h2>Empleos disponibles</h2>
+      <div id="root"></div>
+    </section>
+  </main>
+
+  <footer style="padding-bottom: 2000px;">
+    <small>&copy; 2025 DevJobs. Todos los derechos reservados.</small>
+  </footer>
+</body>
+
+</html>
