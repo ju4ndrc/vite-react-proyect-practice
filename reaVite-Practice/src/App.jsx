@@ -1,5 +1,7 @@
 import { useState } from 'react'
-
+import Header from './components/Header'
+import Footer from './components/Footer'
+import JobCard from './components/JobCard'
 import './App.css'
 
 function App() {
@@ -7,27 +9,7 @@ function App() {
 
   return (
     <>
-
-
-  <header>
-    <h1>
-      <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-        viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <polyline points="16 18 22 12 16 6"></polyline>
-        <polyline points="8 6 2 12 8 18"></polyline>
-      </svg>
-      DevJobs
-    </h1>
-
-    <nav>
-      <a href="">
-        Inicio
-      </a> 
-      <a href="">Empleos</a>
-    </nav>
-
-    
-  </header>
+    <Header></Header>
 
   <main>
     <section className="jobs-search">
@@ -93,6 +75,7 @@ function App() {
       <h2>Resultados de búsqueda</h2>
 
       <div className="jobs-listings">
+        <JobCard></JobCard>
         {/*<!-- Aquí se insertan los empleos dinámicamente -->*/}
       </div>
 
@@ -101,13 +84,14 @@ function App() {
             strokeLinecap="round" strokeLinejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <path d="M15 6l-6 6l6 6" />
-          </svg></a>
+          </svg>
+          </a>
         <a className="is-active" href="#">1</a>
         <a href="#">2</a>
         <a href="#">3</a>
         <a href="#">4</a>
         <a href="#">5</a>
-        <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+        <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"
             strokeLinecap="round" strokeLinejoin="round"
             className="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right">
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -117,9 +101,7 @@ function App() {
     </section>
   </main>
 
-  <footer style="padding-bottom: 2000px;">
-    <small>&copy; 2025 DevJobs. Todos los derechos reservados.</small>
-  </footer>
+    <Footer></Footer>
 
     </>
   )
