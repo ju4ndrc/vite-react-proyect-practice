@@ -1,10 +1,5 @@
-import jobs from "../data.json"
 
-const job = jobs.forEach(job => {
-    return job
-});
-
-function JobCard({job}){
+function JobCard(){
 
     const {titulo, empresa, ubicacion, descripcion,data} = job
     return(
