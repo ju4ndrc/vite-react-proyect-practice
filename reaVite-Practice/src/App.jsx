@@ -20,7 +20,9 @@ function App() {
 
     <JobListings></JobListings>
 
-    <Pagination></Pagination>
+    
+
+    <Pagination currentPage={1} totalPages={10}></Pagination>
     
   </main>
 

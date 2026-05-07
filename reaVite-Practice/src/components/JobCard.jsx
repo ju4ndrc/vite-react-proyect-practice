@@ -1,4 +1,6 @@
 
+
+
 function JobCard(){
 
     const {titulo, empresa, ubicacion, descripcion,data} = job

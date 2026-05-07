@@ -1,4 +1,10 @@
-export default function Pagination(){
+export default function Pagination({ currentPage , totalPages }){
+    // Array de paginas a mostrar 
+    const pages = Array.from({length:totalPages },(_,index)=>index+1)
+
+    const isFirstPage = currentPage === 1
+    const isLastPage = currentPage === totalPages
+
     return(
         <section>
       
@@ -9,11 +15,9 @@ export default function Pagination(){
             <path d="M15 6l-6 6l6 6" />
           </svg>
           </a>
-        <a className="is-active" href="#">1</a>
-        <a href="#">2</a>
-        <a href="#">3</a>
-        <a href="#">4</a>
-        <a href="#">5</a>
+        {pages.map(page =>(
+          <a href="#" className={currentPage === page? 'is-active':''}>{page}</a>
+        ))}
         <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"
             strokeLinecap="round" strokeLinejoin="round"
             className="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right">
