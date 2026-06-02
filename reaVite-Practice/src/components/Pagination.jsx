@@ -48,7 +48,7 @@ export default function Pagination({ currentPage , totalPages, onPageChange }){
         
         
         {pages.map(page =>(
-          <a href="#" data-page={page} onClick={handleChangePage} className={currentPage === page? 'is-active':''}>{page}</a>
+          <a href="#" key={page}  data-page={page} onClick={handleChangePage} className={currentPage === page? 'is-active':''}>{page}</a>
         ))}
         <a href="#" style={styleNextButton} onClick={handleNextClick}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"
