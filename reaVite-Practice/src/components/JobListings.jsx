@@ -1,7 +1,7 @@
 import {JobCard} from './JobCard.jsx'
-import jobsData from '../data.json'
 
-export default function JobListings(){
+
+export default function JobListings({jobs}){
     return(
         <>
         <h2>Resultados de búsqueda</h2>
@@ -10,7 +10,7 @@ export default function JobListings(){
       
         {/*<!-- Aquí se insertan los empleos dinámicamente -->*/}
 
-        {jobsData.map(job =>(
+        {jobs.map(job =>(
           // Las llaves no se pueden omitir ni duplicar
           <JobCard key={job.id} job={job}/>
         ))}
