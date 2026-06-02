@@ -1,24 +1,57 @@
-export default function Pagination({ currentPage , totalPages }){
+import { isValidElement } from "react"
+
+export default function Pagination({ currentPage , totalPages, onPageChange }){
     // Array de paginas a mostrar 
     const pages = Array.from({length:totalPages },(_,index)=>index+1)
 
     const isFirstPage = currentPage === 1
     const isLastPage = currentPage === totalPages
 
+    const stylePrevButton = isFirstPage? {pointerEvents:'none',opacity:0.5}:{}
+    const styleNextButton = isLastPage ? {pointerEvents:'none',opacity:0.5}:{}
+
+    const handlePrevClick = (event)=>{
+      event.preventDefault()
+      if(!isFirstPage){
+        onPageChange(currentPage -1)
+      }
+    }
+
+    const handleNextClick = (event)=>{
+      event.preventDefault()
+      if(!isLastPage){
+          onPageChange(currentPage + 1)
+      }
+    }
+    const handleChangePage= (event)=>{
+
+      event.preventDefault()
+      const page = Number(event.target.dataset.page) 
+      if(page !== currentPage){
+        onPageChange(page)
+      }
+
+    }
+
     return(
         <section>
       
       <nav className="pagination">
-        <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
+        
+            <a href="#" style={stylePrevButton} onClick={handlePrevClick}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
             strokeLinecap="round" strokeLinejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
             <path d="M15 6l-6 6l6 6" />
           </svg>
           </a>
+        
+        
         {pages.map(page =>(
-          <a href="#" className={currentPage === page? 'is-active':''}>{page}</a>
+          <a href="#" data-page={page} onClick={handleChangePage} className={currentPage === page? 'is-active':''}>{page}</a>
         ))}
-        <a href="#"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"
+        <a href="#" style={styleNextButton} onClick={handleNextClick}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"
             strokeLinecap="round" strokeLinejoin="round"
             className="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right">
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
