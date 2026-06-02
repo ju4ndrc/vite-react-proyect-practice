@@ -8,7 +8,14 @@ import Pagination from './components/Pagination.jsx'
 import './App.css'
 
 function App() {
-  
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const totalPages = 5
+
+  const handlePageChange =  (page)  =>{
+    console.log('Chanin page',page)
+    setCurrentPage(page)    
+  }
 
   return (
     <>
@@ -22,7 +29,7 @@ function App() {
 
     
 
-    <Pagination currentPage={1} totalPages={10}></Pagination>
+    <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange}></Pagination>
     
   </main>
 
