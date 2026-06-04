@@ -1,10 +1,12 @@
-import { useId } from "react"
+import { useId, useState } from "react"
  
 export default function SearchFormSection({onSearch, onTextFilter}){
   const idText = useId()
   const idTechnology = useId()
   const idLocation = useId()
   const idExperienceLevel = useId()
+
+  const [focusedField, setFocusedField] = useState(null)
 
   const handleSubmit = (event) => {
     event.preventDefault()
@@ -40,7 +42,12 @@ export default function SearchFormSection({onSearch, onTextFilter}){
             <path d="M21 21l-6 -6" />
           </svg>
 
-          <input name={idText} id="empleos-search-input"  type="text"
+          <input 
+            onFocus={()=>setFocusedField('search')}
+            onBlur={()=> setFocusedField(null)}
+            name={idText}
+             id="empleos-search-input"
+               type="text"
             placeholder="Buscar trabajos, empresas o habilidades" onChange={handleTextChange}/>
 
             <button type="submit" style={{position:"absolute",right:'4px'}}>Search</button>
