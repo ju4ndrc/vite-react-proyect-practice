@@ -13,16 +13,21 @@ const RESULT_PER_PAGE = 3
 
 function App() {
 
-  const [textToFilter, setTextToFilter] = useState({
+  const [filters, setFilters] = useState({
       technology:'',
       location: '',
       experienceLevel: ''
   })
-  const [filters, setFilters] = useState('')
+  const [textToFilter, setTextToFilter] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
 
   const jobsFilterByFilter = jobsData.filter(job=>{
-    return ((filters.technology === '' || job.data.technology === filters.technology))
+    return (
+      ( filters.technology === '' || job.data.technology === filters.technology ) &&
+      ( filters.location === ''|| job.data.modalidad === filters.location ) &&
+      ( filters.experienceLevel === ''|| job.data.nivel === filters.experienceLevel  )
+
+  )
   })
   
   const jobsWithTextFilter = textToFilter === ''
