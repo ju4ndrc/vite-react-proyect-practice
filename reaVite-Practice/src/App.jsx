@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { use, useState } from 'react'
+
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import JobCard from './components/JobCard.jsx'
@@ -8,32 +9,57 @@ import Pagination from './components/Pagination.jsx'
 import jobsData from './data.json'
 import './App.css'
 
-const RESULT_PER_PAGE = 5
+const RESULT_PER_PAGE = 3
 
 function App() {
 
+  const [textToFilter, setTextToFilter] = useState({
+      technology:'',
+      location: '',
+      experienceLevel: ''
+  })
+  const [filters, setFilters] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
 
-  const totalPages = Math.ceil(jobsData.length / RESULT_PER_PAGE)
-
+  const jobsFilterByFilter = jobsData.filter(job=>{
+    return ((filters.technology === '' || job.data.technology === filters.technology))
+  })
   
+  const jobsWithTextFilter = textToFilter === ''
+  ?jobsFilterByFilter 
+   : jobsFilterByFilter.filter(job=>{
+    return job.titulo.toLowerCase().includes(textToFilter.toLowerCase())
+  })
+  
+  const totalPages = Math.ceil(jobsWithTextFilter.length / RESULT_PER_PAGE)
   const handlePageChange =  (page)  =>{
     console.log('Chanin page',page)
     setCurrentPage(page)
     window.scrollTo({top:0, behavior:'smooth'})    
   }
   
-  const pagedResults = jobsData.slice(
+  const pagedResults = jobsWithTextFilter.slice(
     (currentPage-1)* RESULT_PER_PAGE,
     currentPage * RESULT_PER_PAGE
   )
+  
+  const handleSearch = (filters)=>{
+    setFilters(filters)
+    setCurrentPage(1)
+    
+    
+  }
+  const handleTextFilter = (newTextToFilter)=>{
+    setTextToFilter(newTextToFilter)
+    setCurrentPage(1)
+  }
   return (
     <>
     <Header/>
 
   <main>
 
-    <SearchFormSection ></SearchFormSection>
+    <SearchFormSection onSearch={handleSearch} onTextFilter={handleTextFilter}></SearchFormSection>
     <section>
       <JobListings jobs={pagedResults}></JobListings>
 
