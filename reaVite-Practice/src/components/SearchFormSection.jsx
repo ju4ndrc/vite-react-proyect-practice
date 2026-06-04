@@ -1,6 +1,6 @@
 import { useId, useState } from "react"
  
-export default function SearchFormSection({onSearch, onTextFilter}){
+export default function SearchFormSection({onSearch, onTextFilter, onReset}){
   const idText = useId()
   const idTechnology = useId()
   const idLocation = useId()
@@ -8,9 +8,11 @@ export default function SearchFormSection({onSearch, onTextFilter}){
 
   const [focusedField, setFocusedField] = useState(null)
 
+
   const handleSubmit = (event) => {
     event.preventDefault()
-    const formData = new FormData(event.target) //Este es para capturar los datos del formulario principal
+
+    const formData = new FormData(event.target) //Se instancia FormData y Este es para capturar los datos del formulario principal
      
     const filters = {
       search : formData.get(idText),
@@ -26,6 +28,10 @@ export default function SearchFormSection({onSearch, onTextFilter}){
   const handleTextChange= (event) =>{
     const text = event.target.value
     onTextFilter(text)
+  }
+  const hanldeReset = ()=>{
+    document.querySelector('#empleos-search-form').reset()
+    onReset()
   }
     return(
             <section className="jobs-search">
@@ -45,10 +51,13 @@ export default function SearchFormSection({onSearch, onTextFilter}){
           <input 
             onFocus={()=>setFocusedField('search')}
             onBlur={()=> setFocusedField(null)}
+            className={focusedField === 'search' ? 'input-focused':''}
             name={idText}
-             id="empleos-search-input"
+             id={"empleos-search-input"}
                type="text"
-            placeholder="Buscar trabajos, empresas o habilidades" onChange={handleTextChange}/>
+            placeholder="Buscar trabajos, empresas o habilidades" 
+            onChange={handleTextChange}
+            />
 
             <button type="submit" style={{position:"absolute",right:'4px'}}>Search</button>
         </div>
@@ -88,6 +97,7 @@ export default function SearchFormSection({onSearch, onTextFilter}){
             <option value="senior">Senior</option>
             <option value="lead">Lead</option>
           </select>
+          <button type="button" className="btn-secondary" onClick={hanldeReset}>Limipiar Filtros</button>
         </div>
       </form>
 

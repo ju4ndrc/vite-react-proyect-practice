@@ -58,13 +58,22 @@ function App() {
     setTextToFilter(newTextToFilter)
     setCurrentPage(1)
   }
+  const handleReset = ()=>{
+    setFilters=({
+      technology:'',
+      location: '',
+      experienceLevel: ''
+    })
+    setTextToFilter('')
+    setCurrentPage(1)
+  }
   return (
     <>
     <Header/>
 
   <main>
 
-    <SearchFormSection onSearch={handleSearch} onTextFilter={handleTextFilter}></SearchFormSection>
+    <SearchFormSection onSearch={handleSearch} onTextFilter={handleTextFilter} onReset={handleReset}></SearchFormSection>
     <section>
       <JobListings jobs={pagedResults}></JobListings>
 
