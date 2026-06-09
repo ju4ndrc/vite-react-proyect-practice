@@ -1,4 +1,4 @@
-import { use, useState } from 'react'
+import { useEffect, useState } from 'react'
 
 
 
@@ -66,6 +66,14 @@ function SearchPage() {
     setTextToFilter('')
     setCurrentPage(1)
   }
+
+  useEffect(()=>{
+    document.title = `Pagina${currentPage} `
+    return ()=>{
+        window.removeEventListener()
+    }
+  },[jobsWithTextFilter,currentPage])
+
   return (
     
     

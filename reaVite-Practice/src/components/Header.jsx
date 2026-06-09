@@ -1,6 +1,7 @@
 function Header(){
     return(
           <header>
+            <a href="/">
     <h1>
       <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
         viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -9,12 +10,12 @@ function Header(){
       </svg>
       DevJobs
     </h1>
-
+</a>
     <nav>
       <a href="">
         Inicio
       </a> 
-      <a href="">Empleos</a>
+      <a href="/search">Empleos</a>
     </nav>
 
     
