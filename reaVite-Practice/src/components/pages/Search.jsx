@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useEffectEvent, useState } from 'react'
 
 
 
@@ -7,6 +7,7 @@ import JobListings from '../JobListings.jsx'
 import Pagination from '../Pagination.jsx'
 import jobsData from '../../data.json'
 import '../../App.css'
+import { use } from 'react'
 
 const RESULT_PER_PAGE = 3
 
@@ -69,10 +70,10 @@ function SearchPage() {
 
   useEffect(()=>{
     document.title = `Pagina${currentPage} `
-    return ()=>{
-        window.removeEventListener()
-    }
+    return 
   },[jobsWithTextFilter,currentPage])
+
+
 
   return (
     
