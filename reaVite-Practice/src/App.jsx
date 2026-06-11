@@ -6,10 +6,11 @@ import { useEffect, useState } from 'react'
 import HomePage from './components/pages/Home.jsx'
 import SearchPage from './components/pages/Search.jsx'
 import NotFoundPage from './components/pages/404.jsx'
+import useRouter from './hooks/useRouter.jsx'
 
 function App() {
 
-  const [currentPath ,setCurrentPath]=  useState(window.location.pathname)
+  const {currentPath} = useRouter()
 
   let page = <NotFoundPage/>
   if(currentPath === '/'){
@@ -17,18 +18,6 @@ function App() {
   }else if(currentPath === '/search'){
     page = <SearchPage/>
   }
-  useEffect(()=>{
-
-    const handleLocationChange = () => {
-      setCurrentPath(window.location.pathname)
-    }
-
-    window.addEventListener('popstate',handleLocationChange)
-
-    return ()=>{
-      window.removeEventListener('popstate',handleLocationChange)
-    }
-  },[])
 
 
   return (
