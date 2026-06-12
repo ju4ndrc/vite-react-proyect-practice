@@ -13,8 +13,8 @@ function Header(){
     </h1>
 </Link>
     <nav>
-      <a href="">
-        Inicio
+      <a href="/contact">
+        Contacto
       </a> 
       <Link href="/search">Empleos</Link>
     </nav>

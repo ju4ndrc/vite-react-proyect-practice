@@ -1,14 +1,7 @@
 import { useId, useState } from "react"
  
-export default function SearchFormSection({onSearch, onTextFilter, onReset}){
-  const idText = useId()
-  const idTechnology = useId()
-  const idLocation = useId()
-  const idExperienceLevel = useId()
-
-  const [focusedField, setFocusedField] = useState(null)
-
-
+const useSearchForm = ({idTechnology, idLocation , idExperienceLevel ,onSearch, onTextFilter }) =>{
+  const [searchText, setSearchText] = useState("")
   const handleSubmit = (event) => {
     event.preventDefault()
 
@@ -33,6 +26,28 @@ export default function SearchFormSection({onSearch, onTextFilter, onReset}){
     document.querySelector('#empleos-search-form').reset()
     onReset()
   }
+  return {
+    searchText,
+    handleSubmit,
+    handleTextChange,
+    hanldeReset
+  }
+}
+
+export default function SearchFormSection({onSearch, onTextFilter, onReset}){
+  const idText = useId()
+  const idTechnology = useId()
+  const idLocation = useId()
+  const idExperienceLevel = useId()
+
+  const [focusedField, setFocusedField] = useState(null)
+    const {
+    handleSubmit,
+    handleTextChange,
+    hanldeReset
+    } = useSearchForm({idTechnology,idLocation,idExperienceLevel,onSearch,onTextFilter})
+
+  
     return(
             <section className="jobs-search">
       <h1>Encuentra tu próximo trabajo</h1>

@@ -1,0 +1,14 @@
+form{
+    display: flex;
+    flex-direction: column;
+}
+input{
+    border-bottom:solid 1rem white;
+}
+.inputFocused {
+  border-color: #4f46e5 !important;
+  outline: 2px solid #4f46e5;
+}
+.miniMessage{
+    color: chartreuse;
+}
