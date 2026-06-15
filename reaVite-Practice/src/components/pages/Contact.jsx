@@ -1,10 +1,10 @@
-import { useState } from 'react'
+import { use, useState } from 'react'
 import styles from './Contact.module.css'
-
-
+import useValidation from '../../hooks/useValidation'
 
 export default function Contact(){
     const [focusedField, setFocusedField] = useState(null)
+    const {handleChange,formData} = useValidation()
     return(
     <main>
       <h1>📧 Contacto</h1>
@@ -13,6 +13,8 @@ export default function Contact(){
         <form  action="">
             <input 
             required
+            onChange={handleChange}
+            value={formData.email}
             onFocus={()=>setFocusedField('email')}
             onBlur={()=>setFocusedField(null)}
              name='email'
@@ -22,8 +24,11 @@ export default function Contact(){
                 {focusedField === 'email'&& (
                     <small className={styles.miniMessage}>Introduzca un correo valido</small>
                 )}
+            
             <input
             required
+            onChange={handleChange}
+            value={formData.phone}
             onFocus={()=>setFocusedField('phone')}
             onBlur={()=>setFocusedField(null)}
              name='phone'
