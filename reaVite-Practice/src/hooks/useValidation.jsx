@@ -1,6 +1,7 @@
 import { useState } from "react"
 
-export default function useValidation(){
+const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+export default function useContactForm(){
 
         const [formData,setFormData] = useState({
             email:'',
@@ -19,6 +20,23 @@ export default function useValidation(){
                 [name]:value
             }))
             console.log(formData)
+
+        }
+        setErrors(prev=>{
+            const newErrors = {prev}
+            delete newErrors[name]
+
+            return newErrors
+        })
+
+        const validate = (formData) =>{
+            const newErrors = { }
+            if(!formData.email.trim()){
+                newErrors.email='El correo es obligatorio'
+            }else if(!regex.test(formData.email)){
+                newErrors.email='El correo no cumples con las condiciones'
+            }
+            return newErrors
         }
     
     return {

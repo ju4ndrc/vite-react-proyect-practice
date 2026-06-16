@@ -1,10 +1,10 @@
 import { use, useState } from 'react'
 import styles from './Contact.module.css'
-import useValidation from '../../hooks/useValidation'
+import useContactForm from '../../hooks/useValidation.jsx'
 
 export default function Contact(){
     const [focusedField, setFocusedField] = useState(null)
-    const {handleChange,formData} = useValidation()
+    const {handleChange,formData} = useContactForm()
     return(
     <main>
       <h1>📧 Contacto</h1>
