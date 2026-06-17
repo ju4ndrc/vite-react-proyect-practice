@@ -4,15 +4,17 @@ import useContactForm from '../../hooks/useValidation.jsx'
 
 export default function Contact(){
     const [focusedField, setFocusedField] = useState(null)
-    const {handleChange,formData} = useContactForm()
+    const {handleChange,formData,handleSubmit,errors} = useContactForm()
+ 
+
     return(
     <main>
       <h1>📧 Contacto</h1>
       <p>¿Tienes alguna pregunta? Contáctanos.</p>
     
-        <form  action="">
+        <form  onSubmit={handleSubmit}>
             <input 
-            required
+            
             onChange={handleChange}
             value={formData.email}
             onFocus={()=>setFocusedField('email')}
@@ -21,12 +23,15 @@ export default function Contact(){
               className={focusedField === 'email'? 'input-focused':''}
                type="text"
                 placeholder="Correo" />
-                {focusedField === 'email'&& (
-                    <small className={styles.miniMessage}>Introduzca un correo valido</small>
+                {errors.email&&(
+                    <small>{errors.email}</small>
                 )}
+                {/* {focusedField === 'email'&& (
+                    <small className={styles.miniMessage}>Introduzca un correo valido</small>
+                )} */}
             
             <input
-            required
+            
             onChange={handleChange}
             value={formData.phone}
             onFocus={()=>setFocusedField('phone')}

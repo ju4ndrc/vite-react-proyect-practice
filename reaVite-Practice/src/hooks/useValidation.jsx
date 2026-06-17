@@ -21,14 +21,18 @@ export default function useContactForm(){
             }))
             console.log(formData)
 
+            setErrors(prev=>{
+                const newErrors = {...prev}
+                delete newErrors[name]
+    
+                return newErrors
+            })
         }
-        setErrors(prev=>{
-            const newErrors = {prev}
-            delete newErrors[name]
-
-            return newErrors
-        })
-
+        const handleSubmit = (event)=>{
+            event.preventDefault()
+            const newErrors = validate(formData)
+            setErrors(newErrors)
+        }   
         const validate = (formData) =>{
             const newErrors = { }
             if(!formData.email.trim()){
@@ -41,6 +45,8 @@ export default function useContactForm(){
     
     return {
         handleChange,
-        formData       
+        formData,
+        handleSubmit,
+        errors       
     }
 }
