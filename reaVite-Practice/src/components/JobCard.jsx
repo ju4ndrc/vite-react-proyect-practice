@@ -1,4 +1,5 @@
 import { useState } from "react"
+import toast from "react-hot-toast"
 
 
 export function JobCard({ job }) {
@@ -7,9 +8,11 @@ export function JobCard({ job }) {
 
   const handleApplyClick = ( ) =>{
     setIsApplied(true)
+    toast.success('Has Aplicado')
   }
   const buttonClasses = isApplied ? 'button-apply-job is-applied': 'button-apply-job'
   const buttonText = isApplied ? 'Aplicado': 'Aplicar'
+ 
   return (
     <article
       className="job-listing-card"
@@ -25,6 +28,7 @@ export function JobCard({ job }) {
         <p>{job.descripcion}</p>
       </div>
       <button onClick={handleApplyClick} className={buttonClasses}>{buttonText}</button>
+      
     </article>
   )
 }

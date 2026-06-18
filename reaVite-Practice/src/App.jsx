@@ -9,6 +9,7 @@ import SearchPage from './components/pages/Search.jsx'
 import NotFoundPage from './components/pages/404.jsx'
 import useRouter from './hooks/useRouter.jsx'
 import Route from './components/Route.jsx'
+import {Toaster} from 'react-hot-toast'
 
 function App() {
 
@@ -18,10 +19,12 @@ function App() {
 
   return (
     <>
+    <Toaster position='top-center'></Toaster>
     <Header/>
 
     <Route path='/' component={HomePage}/>
     <Route path='/search' component={SearchPage}/>
+    
     <Route path='/contact' component={Contact} />
 
     <Footer/>

@@ -2,6 +2,7 @@ import { use, useState } from 'react'
 import styles from './Contact.module.css'
 import useContactForm from '../../hooks/useValidation.jsx'
 
+
 export default function Contact(){
     const [focusedField, setFocusedField] = useState(null)
     const {handleChange,formData,handleSubmit,errors} = useContactForm()
@@ -9,6 +10,7 @@ export default function Contact(){
 
     return(
     <main>
+     
       <h1>📧 Contacto</h1>
       <p>¿Tienes alguna pregunta? Contáctanos.</p>
     
@@ -24,7 +26,7 @@ export default function Contact(){
                type="text"
                 placeholder="Correo" />
                 {errors.email&&(
-                    <small>{errors.email}</small>
+                    <small className={styles.miniMessage}>{errors.email}</small>
                 )}
                 {/* {focusedField === 'email'&& (
                     <small className={styles.miniMessage}>Introduzca un correo valido</small>
@@ -40,8 +42,8 @@ export default function Contact(){
               className={focusedField === 'phone'? 'input-focused':''}
                type="text"
                 placeholder="Telefono" />
-                {focusedField === 'phone' && (
-                    <small className={styles.miniMessage}>Introduzca un formato valido: +57 300 123 4567</small>
+                {errors.phone  && (
+                    <small className={styles.miniMessage}>{errors.phone}</small>
                 )}
                 
             <button >Enviar</button>

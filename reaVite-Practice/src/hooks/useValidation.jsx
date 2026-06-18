@@ -1,18 +1,23 @@
 import { useState } from "react"
+import toast from 'react-hot-toast'
 
 const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 const regexPhone = /^\d+$/
+
+const INITIAL_FORM = {
+    email:'',
+    phone:'',
+}
+
+
 export default function useContactForm(){
 
-        const [formData,setFormData] = useState({
-            email:'',
-            phone:''
-        })
+        const [formData,setFormData] = useState(INITIAL_FORM)
     
         const [errors,setErrors] = useState({})
         
-        const [success,setSuccess] = useState(false)
+        
     
         const handleChange= (event) =>{
             const {name, value} = event.target  
@@ -29,11 +34,17 @@ export default function useContactForm(){
     
                 return newErrors
             })
+            
         }
         const handleSubmit = (event)=>{
             event.preventDefault()
             const newErrors = validate(formData)
             setErrors(newErrors)
+            if(Object.keys(newErrors).length === 0){
+                
+                toast.success('Formulario Enviado')
+                resetForm()
+            }
         }   
         const validate = (formData) =>{
             const {email,phone} = formData
@@ -45,6 +56,9 @@ export default function useContactForm(){
             }
             if(!phone.trim()){
                 newErrors.phone='El campo esta vacio!'
+            }else if(!phone.startsWith('3')){
+                newErrors.phone='Todo numero de telefono COL empieza con 3'
+
             }
             else if(!regexPhone.test(phone)){
                 newErrors.phone='El campo solo debe contener numeros'
@@ -55,11 +69,16 @@ export default function useContactForm(){
 
             return newErrors
         }
-    
+        const resetForm = ()=>{
+            setFormData(INITIAL_FORM)
+            setErrors({})
+        }
+ 
     return {
         handleChange,
         formData,
         handleSubmit,
-        errors       
+        errors,
+        
     }
 }
