@@ -256,6 +256,7 @@ button {
 
   &:active { 
     transform: scale(0.90)
+
   }
 
   &:disabled {
@@ -475,4 +476,28 @@ article {
     background: #4caf50;
     pointer-events: none;
   }
+}
+
+.nav-link {
+  position: relative;
+  text-decoration: none;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+
+  width: 0;
+  height: 2px;
+
+  background-color: #4caf50;
+
+  transition: width 0.5s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
 }

@@ -2,7 +2,7 @@ import Link from "./Link"
 function Header(){
     return(
           <header>
-    <Link href='/'  >
+    <a href='/' >
         <h1>
           <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
             viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -11,11 +11,11 @@ function Header(){
           </svg>
           DevJobs
     </h1>
-</Link>
+</a>
     <nav>
-      <a href="/contact">
+      <Link href="/contact">
         Contacto
-      </a> 
+      </Link> 
       <Link href="/search">Empleos</Link>
     </nav>
 
