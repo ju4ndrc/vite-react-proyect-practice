@@ -57,6 +57,7 @@ const useFilters = ()=>{
     setTextToFilter(newTextToFilter)
     setCurrentPage(1)
   }
+  
   const handleReset = ()=>{
     setFilters=({
       technology:'',

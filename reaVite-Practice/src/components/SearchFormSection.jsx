@@ -1,6 +1,6 @@
 import { useId, useState } from "react"
  
-const useSearchForm = ({idTechnology, idLocation , idExperienceLevel ,onSearch, onTextFilter }) =>{
+const useSearchForm = ({idText,idTechnology, idLocation , idExperienceLevel ,onSearch, onTextFilter }) =>{
   const [searchText, setSearchText] = useState("")
   const handleSubmit = (event) => {
     event.preventDefault()
