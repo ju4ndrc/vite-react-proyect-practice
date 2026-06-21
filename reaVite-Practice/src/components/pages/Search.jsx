@@ -10,10 +10,9 @@ import '../../App.css'
 import { use } from 'react'
 
 const RESULT_PER_PAGE = 3
+const useFilters = ()=>{
 
-function SearchPage() {
-
-  const [filters, setFilters] = useState({
+     const [filters, setFilters] = useState({
       technology:'',
       location: '',
       experienceLevel: ''
@@ -68,13 +67,35 @@ function SearchPage() {
     setCurrentPage(1)
   }
 
-  useEffect(()=>{
-    document.title = `Pagina${currentPage} `
-    return 
-  },[jobsWithTextFilter,currentPage])
 
 
+  return{
+    jobsWithTextFilter,
+    pagedResults,
+    totalPages,
+    currentPage,
+    handlePageChange,
+    handleSearch,
+    handleTextFilter,
+    handleReset
+  }
+  
+}
 
+function SearchPage() {
+  const {jobsWithTextFilter,
+    pagedResults,
+    totalPages,
+    currentPage,
+    handlePageChange,
+    handleSearch,
+    handleTextFilter,
+    handleReset} = useFilters()
+
+    useEffect(()=>{
+      document.title = `Pagina${currentPage} `
+      return 
+    },[jobsWithTextFilter,currentPage])
   return (
     
     
