@@ -9,7 +9,7 @@ import jobsData from '../../data.json'
 import '../../App.css'
 import { use } from 'react'
 
-const RESULT_PER_PAGE = 3
+const RESULT_PER_PAGE = 4
 const useFilters = ()=>{
 
      const [filters, setFilters] = useState({
@@ -26,7 +26,18 @@ const useFilters = ()=>{
     async function fetchJobs() {
       try{
         setLoading(true)
-        const response = await fetch('https://jscamp-api.vercel.app/api/jobs')
+        const params = new URLSearchParams()
+        if(textToFilter)params.append(textToFilter,textToFilter)
+        if(filters.technology)params.append('technology',filters.technology)
+        if(filters.location)params.append('type',filters.location)
+        if(filters.experienceLevel)params.append('level',filters.experienceLevel)
+        
+        // await new Promise ((resolve)=>setTimeout(resolve,5000)) //aqi carga por 5 egundo para darle tiempo a la api y no tarde la ui (Esto se debe remover al subir a produccion)
+        const offset = (currentPage -1 ) * RESULT_PER_PAGE
+        params.append('limit',RESULT_PER_PAGE)
+        params.append('offset',offset)
+        const queryParams = params.toString()
+        const response = await fetch(`https://jscamp-api.vercel.app/api/jobs?${queryParams}`)
         const json = await response.json()
 
         setJobs(json.data)
@@ -40,9 +51,9 @@ const useFilters = ()=>{
 
     fetchJobs()
     //  ->  Queda adentro para evitar que se llene desde otro lado
-  },[])
+  },[filters,textToFilter,currentPage])
 
-  const totalPages = Math.ceil(jobs.length / RESULT_PER_PAGE)
+  const totalPages = Math.ceil(total / RESULT_PER_PAGE)
   
   const handlePageChange =  (page)  =>{
     console.log('Chanin page',page)
