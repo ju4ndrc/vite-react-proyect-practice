@@ -1,5 +1,6 @@
 import { useId, useState } from "react"
- 
+
+
 const useSearchForm = ({idText,idTechnology, idLocation , idExperienceLevel ,onSearch, onTextFilter }) =>{
   const [searchText, setSearchText] = useState("")
   const handleSubmit = (event) => {
@@ -15,26 +16,34 @@ const useSearchForm = ({idText,idTechnology, idLocation , idExperienceLevel ,onS
       
      }
      onSearch(filters)
-
+     
+     const nullFields = (filters)=>{
+        const values = Object.values(filters)    
+        if(!values){
+          console.log('Los filtros estan vacios en este momento')
+        }else{
+          console.log('Filtros en busqueda')
+        }
+      }
 
   }
   const handleTextChange= (event) =>{
     const text = event.target.value
     onTextFilter(text)
   }
-  const hanldeReset = ()=>{
-    document.querySelector('#empleos-search-form').reset()
-    onReset()
+  const hanldeClearFilters = ()=>{
+    
   }
   return {
     searchText,
     handleSubmit,
     handleTextChange,
-    hanldeReset
+    
+    
   }
 }
 
-export default function SearchFormSection({onSearch, onTextFilter, onReset}){
+export default function SearchFormSection({onSearch, onTextFilter, onReset,onClearFilters,activeFilters}){
   const idText = useId()
   const idTechnology = useId()
   const idLocation = useId()
@@ -44,7 +53,8 @@ export default function SearchFormSection({onSearch, onTextFilter, onReset}){
     const {
     handleSubmit,
     handleTextChange,
-    hanldeReset
+    hanldeReset,
+   
     } = useSearchForm({idTechnology,idLocation,idExperienceLevel,onSearch,onTextFilter})
 
   
@@ -112,7 +122,10 @@ export default function SearchFormSection({onSearch, onTextFilter, onReset}){
             <option value="senior">Senior</option>
             <option value="lead">Lead</option>
           </select>
-          <button type="button" className="btn-secondary" onClick={hanldeReset}>Limipiar Filtros</button>
+          
+            { activeFilters &&
+            (<button type="button" className="btn-secondary" onClick={onClearFilters} >Limipiar Filtros</button>)}
+            
         </div>
       </form>
 

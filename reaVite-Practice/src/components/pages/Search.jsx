@@ -1,6 +1,6 @@
 import { useEffect, useEffectEvent, useReducer, useState } from 'react'
 
-
+import toast from 'react-hot-toast'
 
 import SearchFormSection from '../SearchFormSection.jsx'
 import JobListings from '../JobListings.jsx'
@@ -10,6 +10,11 @@ import '../../App.css'
 import { use } from 'react'
 
 const RESULT_PER_PAGE = 4
+const INITIAL_FILTER = {
+      technology:'',
+      location: '',
+      experienceLevel: ''
+}
 const useFilters = ()=>{
 
      const [filters, setFilters] = useState({
@@ -17,6 +22,12 @@ const useFilters = ()=>{
       location: '',
       experienceLevel: ''
   })
+
+  const hasActiveFilters = (filters)=>{
+    return(Object.values(filters).some(valor=>valor !==''))
+  }
+  const activeFilters = hasActiveFilters(filters)
+  
   const [textToFilter, setTextToFilter] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [jobs,setJobs] = useState([])
@@ -74,7 +85,14 @@ const useFilters = ()=>{
     setCurrentPage(1)
   }
   
-
+  const handleClearFilters =(activeFilters)=>{
+    document.querySelector('#empleos-search-form').reset()  
+    setFilters(INITIAL_FILTER)
+    toast('Filtros limpios',{
+      icon:'🧹',
+    })
+      
+  } 
 
 
   return{
@@ -86,7 +104,8 @@ const useFilters = ()=>{
     handlePageChange,
     handleSearch,
     handleTextFilter,
-   
+    handleClearFilters,
+    activeFilters
   }
   
 }
@@ -101,6 +120,8 @@ function SearchPage() {
     handlePageChange,
     handleSearch,
     handleTextFilter,
+    handleClearFilters,
+    activeFilters
  
   } = useFilters()
 
@@ -114,7 +135,8 @@ function SearchPage() {
 
   <main>
 
-    <SearchFormSection onSearch={handleSearch} onTextFilter={handleTextFilter} ></SearchFormSection>
+    <SearchFormSection onSearch={handleSearch} onTextFilter={handleTextFilter} activeFilters={activeFilters} onClearFilters={handleClearFilters}></SearchFormSection>
+    
     <section>
       {/* jobs={jobs.data} -> Tiene los empleos */}
       
