@@ -36,10 +36,12 @@ const useFilters = ()=>{
   const [jobs,setJobs] = useState([])
   const [total,setTotal]= useState(0)
   const [loading,setLoading] =useState(true)
+  const [errors , setErrors] = useState(null)
   useEffect(()=>{
     async function fetchJobs() {
       try{
         setLoading(true)
+        setErrors(null)
         const params = new URLSearchParams()
         if(textToFilter)params.append(textToFilter,textToFilter)
         if(filters.technology)params.append('technology',filters.technology)
@@ -53,10 +55,11 @@ const useFilters = ()=>{
         const queryParams = params.toString()
         const response = await fetch(`https://jscamp-api.vercel.app/api/jobs?${queryParams}`)
         const json = await response.json()
-
+        if(!response.ok) throw new Error("Ocurrio un error") //verifico que la repuesta
         setJobs(json.data)
         setTotal(json.total)
       }catch(error){
+        setErrors(error.message)
         console.error('Error fetching jobs:',error)
       }finally{
         setLoading(false)
@@ -108,7 +111,8 @@ const useFilters = ()=>{
     handleSearch,
     handleTextFilter,
     handleClearFilters,
-    activeFilters
+    activeFilters,
+    errors
   }
   
 }
@@ -124,14 +128,41 @@ function SearchPage() {
     handleSearch,
     handleTextFilter,
     handleClearFilters,
-    activeFilters
- 
+    activeFilters,
+    errors
   } = useFilters()
 
     useEffect(()=>{
       document.title = `Pagina${currentPage} `
       return 
     },[jobs,currentPage])
+
+    const renderContent=() =>{
+      if(errors){
+        return (
+          <>
+          <p>{errors}</p>
+          <button onClick={()=>{window.location.reload()}}>Reintentar</button>
+
+          </>
+        )
+      }
+      else if(loading){
+        return(
+          <ClipLoader 
+                color='white'
+       
+        id={styles.loader}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+          />
+        )
+      }else if(!loading){
+          return (
+            <JobListings jobs={jobs} />
+          )
+        }
+    }
   return (
     
     
@@ -145,13 +176,7 @@ function SearchPage() {
       
 
       {
-        loading ? <ClipLoader 
-                color='white'
-       
-        id={styles.loader}
-        aria-label="Loading Spinner"
-        data-testid="loader"
-          /> :<JobListings jobs={jobs} />
+        renderContent()
       }
       <p> Mostrando {(currentPage -1) * RESULT_PER_PAGE + 1} -{' '} {Math.min(currentPage * RESULT_PER_PAGE, total)} de {total} Resultados</p>
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange}></Pagination>
