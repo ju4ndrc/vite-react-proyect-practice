@@ -1,6 +1,7 @@
 import { useEffect, useEffectEvent, useReducer, useState } from 'react'
 
 import toast from 'react-hot-toast'
+import { ClipLoader } from "react-spinners";
 
 import SearchFormSection from '../SearchFormSection.jsx'
 import JobListings from '../JobListings.jsx'
@@ -8,6 +9,8 @@ import Pagination from '../Pagination.jsx'
 import jobsData from '../../data.json'
 import '../../App.css'
 import { use } from 'react'
+
+import styles from './Search.module.css'
 
 const RESULT_PER_PAGE = 4
 const INITIAL_FILTER = {
@@ -142,7 +145,13 @@ function SearchPage() {
       
 
       {
-        loading ? <p>Cargandp empleos ...</p>:<JobListings jobs={jobs} />
+        loading ? <ClipLoader 
+                color='white'
+       
+        id={styles.loader}
+        aria-label="Loading Spinner"
+        data-testid="loader"
+          /> :<JobListings jobs={jobs} />
       }
       <p> Mostrando {(currentPage -1) * RESULT_PER_PAGE + 1} -{' '} {Math.min(currentPage * RESULT_PER_PAGE, total)} de {total} Resultados</p>
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange}></Pagination>
