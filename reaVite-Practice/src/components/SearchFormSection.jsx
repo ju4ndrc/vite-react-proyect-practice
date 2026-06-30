@@ -2,7 +2,7 @@ import { useId, useState } from "react"
 
 
 const useSearchForm = ({idText,idTechnology, idLocation , idExperienceLevel ,onSearch, onTextFilter }) =>{
-  const [searchText, setSearchText] = useState("")
+
   const handleSubmit = (event) => {
     event.preventDefault()
 
@@ -17,25 +17,16 @@ const useSearchForm = ({idText,idTechnology, idLocation , idExperienceLevel ,onS
      }
      onSearch(filters)
      
-     const nullFields = (filters)=>{
-        const values = Object.values(filters)    
-        if(!values){
-          console.log('Los filtros estan vacios en este momento')
-        }else{
-          console.log('Filtros en busqueda')
-        }
-      }
+     
 
   }
   const handleTextChange= (event) =>{
     const text = event.target.value
     onTextFilter(text)
   }
-  const hanldeClearFilters = ()=>{
-    
-  }
+
   return {
-    searchText,
+    
     handleSubmit,
     handleTextChange,
     
@@ -43,7 +34,7 @@ const useSearchForm = ({idText,idTechnology, idLocation , idExperienceLevel ,onS
   }
 }
 
-export default function SearchFormSection({onSearch, onTextFilter, onReset,onClearFilters,activeFilters}){
+export default function SearchFormSection({onSearch, onTextFilter, onClearFilters,activeFilters}){
   const idText = useId()
   const idTechnology = useId()
   const idLocation = useId()
@@ -53,7 +44,7 @@ export default function SearchFormSection({onSearch, onTextFilter, onReset,onCle
     const {
     handleSubmit,
     handleTextChange,
-    hanldeReset,
+    
    
     } = useSearchForm({idTechnology,idLocation,idExperienceLevel,onSearch,onTextFilter})
 

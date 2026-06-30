@@ -1,4 +1,4 @@
-import { useEffect, useEffectEvent, useReducer, useState } from 'react'
+import { useEffect,useState } from 'react'
 
 import toast from 'react-hot-toast'
 import { ClipLoader } from "react-spinners";
@@ -6,9 +6,9 @@ import { ClipLoader } from "react-spinners";
 import SearchFormSection from '../SearchFormSection.jsx'
 import JobListings from '../JobListings.jsx'
 import Pagination from '../Pagination.jsx'
-import jobsData from '../../data.json'
+
 import '../../App.css'
-import { use } from 'react'
+
 
 import styles from './Search.module.css'
 
@@ -91,7 +91,7 @@ const useFilters = ()=>{
     setCurrentPage(1)
   }
   
-  const handleClearFilters =(activeFilters)=>{
+  const handleClearFilters =()=>{
     document.querySelector('#empleos-search-form').reset()  
     setFilters(INITIAL_FILTER)
     toast('Filtros limpios',{
@@ -132,10 +132,7 @@ function SearchPage() {
     errors
   } = useFilters()
 
-    useEffect(()=>{
-      document.title = `Pagina${currentPage} `
-      return 
-    },[jobs,currentPage])
+
 
     const renderContent=() =>{
       if(errors){
@@ -163,12 +160,21 @@ function SearchPage() {
           )
         }
     }
+
+
+  
+   const title = ()=>{
+    if(loading) return 'Cargando empleos'
+    if(errors) return 'Hubo un problema cargando los empleos'
+    if(jobs.length !== 0) return `Resultados | ${total} -Pagina | ${currentPage}`
+
+  }
   return (
     
     
 
   <main>
-
+    <title>{title()}</title>
     <SearchFormSection onSearch={handleSearch} onTextFilter={handleTextFilter} activeFilters={activeFilters} onClearFilters={handleClearFilters}></SearchFormSection>
     
     <section>
