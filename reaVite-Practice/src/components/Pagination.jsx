@@ -32,13 +32,18 @@ export default function Pagination({ currentPage , totalPages, onPageChange }){
       }
 
     }
+    const buildPageUrl = (page)=>{
+      const url = new URL(window.location)
+      url.searchParams.set('page',page)
+      return `${url.pathname}?${url.searchParams.toString()}`
+    }
 
     return(
         <section>
       
       <nav className={styles.pagination}>
         
-            <a href="#" style={stylePrevButton} onClick={handlePrevClick}>
+            <a href={buildPageUrl(currentPage - 1)} style={stylePrevButton} onClick={handlePrevClick}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"
             strokeLinecap="round" strokeLinejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none" />
@@ -48,9 +53,9 @@ export default function Pagination({ currentPage , totalPages, onPageChange }){
         
         
         {pages.map(page =>(
-          <a href="#" key={page}  data-page={page} onClick={handleChangePage} className={currentPage === page? styles.isActive :''}>{page}</a>
+          <a href={buildPageUrl(page)} key={page}  data-page={page} onClick={handleChangePage} className={currentPage === page? styles.isActive :''}>{page}</a>
         ))}
-        <a href="#" style={styleNextButton} onClick={handleNextClick}>
+        <a href={buildPageUrl(currentPage + 1)} style={styleNextButton} onClick={handleNextClick}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"
             strokeLinecap="round" strokeLinejoin="round"
             className="icon icon-tabler icons-tabler-outline icon-tabler-chevron-right">
