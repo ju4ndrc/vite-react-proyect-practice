@@ -1,8 +1,12 @@
-import {  useId, useState } from "react"
+import {  useId, useState ,useRef} from "react"
 
-let timeOutId = null
+
 const useSearchForm = ({idText,idTechnology, idLocation , idExperienceLevel ,onSearch, onTextFilter }) =>{
+
+  const timeOutId = useRef(null)
+
   const [searchText, setSearchText] = useState("")
+
   const handleSubmit = (event) => {
     event.preventDefault()
 
@@ -24,17 +28,23 @@ const useSearchForm = ({idText,idTechnology, idLocation , idExperienceLevel ,onS
   }
   const handleTextChange= (event) =>{
     const text = event.target.value
-    setSearchText()//Aqui actualizamos nel input
-    if(timeOutId) clearTimeout(timeOutId)
+
+    setSearchText(text)//Aqui actualizamos nel input
+
+    if(timeOutId.current){
+
+       clearTimeout(timeOutId.current)
+       
+      }
     //Aqui timeout 
-    timeOutId = setTimeout(()=>{
+    timeOutId.current = setTimeout(()=>{
         onTextFilter(text)
 
     },500)
   }
 
   return {
-    
+    searchText,
     handleSubmit,
     handleTextChange,
     
@@ -47,9 +57,10 @@ export default function SearchFormSection({onSearch, onTextFilter, onClearFilter
   const idTechnology = useId()
   const idLocation = useId()
   const idExperienceLevel = useId()
-
+  const inputResetRef = useRef()
   const [focusedField, setFocusedField] = useState(null)
     const {
+  
     handleSubmit,
     handleTextChange,
     
@@ -73,6 +84,7 @@ export default function SearchFormSection({onSearch, onTextFilter, onClearFilter
           </svg>
 
           <input 
+            ref={inputResetRef}
             onFocus={()=>setFocusedField('search')}
             onBlur={()=> setFocusedField(null)}
             className={focusedField === 'search' ? 'input-focused':''}

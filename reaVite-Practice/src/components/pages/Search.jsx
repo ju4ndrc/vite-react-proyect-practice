@@ -43,7 +43,7 @@ const useFilters = ()=>{
         setLoading(true)
         setErrors(null)
         const params = new URLSearchParams()
-        if(textToFilter)params.append(textToFilter,textToFilter)
+        if(textToFilter)params.append('text',textToFilter)
         if(filters.technology)params.append('technology',filters.technology)
         if(filters.location)params.append('type',filters.location)
         if(filters.experienceLevel)params.append('level',filters.experienceLevel)
@@ -73,7 +73,7 @@ const useFilters = ()=>{
   const totalPages = Math.ceil(total / RESULT_PER_PAGE)
   
   const handlePageChange =  (page)  =>{
-    console.log('Chanin page',page)
+   
     setCurrentPage(page)
     window.scrollTo({top:0, behavior:'smooth'})    
   }
@@ -90,10 +90,12 @@ const useFilters = ()=>{
     setTextToFilter(newTextToFilter)
     setCurrentPage(1)
   }
-  
+ 
+
   const handleClearFilters =()=>{
-    document.querySelector('#empleos-search-form').reset()  
+    setTextToFilter('')
     setFilters(INITIAL_FILTER)
+    document.querySelector('#empleos-search-form','#empleos-search-input').reset()
     toast('Filtros limpios',{
       icon:'🧹',
     })
@@ -118,6 +120,7 @@ const useFilters = ()=>{
 }
 
 function SearchPage() {
+  
   const {
     loading,
     jobs,

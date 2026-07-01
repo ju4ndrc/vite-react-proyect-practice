@@ -6,8 +6,9 @@ export default function HomePage(){
     const {navigateTo} = useRouter()
     const handleSearch = (event)=>{
         event.preventDefault()
-        const formData = new FormData.get('search')
+        const formData = new FormData(event.target)
         const searchTerm = formData.get('search')
+        
         const url = searchTerm !== ''?`/search?text=${encodeURIComponent(searchTerm)}`: '/search'
         navigateTo(url)
     }
