@@ -166,7 +166,7 @@ function SearchPage() {
    const title = ()=>{
     if(loading) return 'Cargando empleos'
     if(errors) return 'Hubo un problema cargando los empleos'
-    if(jobs.length !== 0) return `Resultados | ${total} -Pagina | ${currentPage}`
+    if(jobs.length !== 0) return `Resultados ${total} | Pagina  ${currentPage}`
 
   }
   return (

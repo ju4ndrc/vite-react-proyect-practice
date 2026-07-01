@@ -1,13 +1,15 @@
-import { useId, useState } from "react"
+import {  useId, useState } from "react"
 
-
+let timeOutId = null
 const useSearchForm = ({idText,idTechnology, idLocation , idExperienceLevel ,onSearch, onTextFilter }) =>{
-
+  const [searchText, setSearchText] = useState("")
   const handleSubmit = (event) => {
     event.preventDefault()
 
     const formData = new FormData(event.currentTarget) //Se instancia FormData y Este es para capturar los datos del formulario principal
-     
+    
+    if(event.target.name === idText) return 
+
     const filters = {
       search : formData.get(idText),
       technology:formData.get(idTechnology),
@@ -22,7 +24,13 @@ const useSearchForm = ({idText,idTechnology, idLocation , idExperienceLevel ,onS
   }
   const handleTextChange= (event) =>{
     const text = event.target.value
-    onTextFilter(text)
+    setSearchText()//Aqui actualizamos nel input
+    if(timeOutId) clearTimeout(timeOutId)
+    //Aqui timeout 
+    timeOutId = setTimeout(()=>{
+        onTextFilter(text)
+
+    },500)
   }
 
   return {
@@ -46,7 +54,7 @@ export default function SearchFormSection({onSearch, onTextFilter, onClearFilter
     handleTextChange,
     
    
-    } = useSearchForm({idTechnology,idLocation,idExperienceLevel,onSearch,onTextFilter})
+    } = useSearchForm({idTechnology,idLocation,idText,idExperienceLevel,onSearch,onTextFilter})
 
   
     return(
