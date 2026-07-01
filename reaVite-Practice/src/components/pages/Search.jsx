@@ -95,7 +95,7 @@ const useFilters = ()=>{
   const handleClearFilters =()=>{
     setTextToFilter('')
     setFilters(INITIAL_FILTER)
-    document.querySelector('#empleos-search-form','#empleos-search-input').reset()
+  
     toast('Filtros limpios',{
       icon:'🧹',
     })

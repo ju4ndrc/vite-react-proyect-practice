@@ -57,8 +57,10 @@ export default function SearchFormSection({onSearch, onTextFilter, onClearFilter
   const idTechnology = useId()
   const idLocation = useId()
   const idExperienceLevel = useId()
-  const inputResetRef = useRef()
+  
   const [focusedField, setFocusedField] = useState(null)
+  const clearRef = useRef()
+
     const {
   
     handleSubmit,
@@ -66,14 +68,19 @@ export default function SearchFormSection({onSearch, onTextFilter, onClearFilter
     
    
     } = useSearchForm({idTechnology,idLocation,idText,idExperienceLevel,onSearch,onTextFilter})
+    const handleClearInput = (event)=>{
+      event.preventDefault()
+      clearRef.current.reset()
+      onClearFilters()
 
+    }
   
     return(
             <section className="jobs-search">
       <h1>Encuentra tu próximo trabajo</h1>
       <p>Explora miles de oportunidades en el sector tecnológico.</p>
 
-      <form onChange={handleSubmit} id="empleos-search-form" role="search">
+      <form ref={clearRef} onChange={handleSubmit} id="empleos-search-form" role="search">
         <div className="search-bar">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"
@@ -84,7 +91,7 @@ export default function SearchFormSection({onSearch, onTextFilter, onClearFilter
           </svg>
 
           <input 
-            ref={inputResetRef}
+            
             onFocus={()=>setFocusedField('search')}
             onBlur={()=> setFocusedField(null)}
             className={focusedField === 'search' ? 'input-focused':''}
@@ -135,7 +142,7 @@ export default function SearchFormSection({onSearch, onTextFilter, onClearFilter
           </select>
           
             { activeFilters &&
-            (<button type="button" className="btn-secondary" onClick={onClearFilters} >Limipiar Filtros</button>)}
+            (<button type="button" className="btn-secondary" onClick={handleClearInput} >Limipiar Filtros</button>)}
             
         </div>
       </form>
