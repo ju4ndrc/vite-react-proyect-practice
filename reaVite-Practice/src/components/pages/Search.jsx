@@ -11,6 +11,7 @@ import '../../App.css'
 
 
 import styles from './Search.module.css'
+import useRouter from '../../hooks/useRouter.jsx';
 
 const RESULT_PER_PAGE = 4
 const INITIAL_FILTER = {
@@ -20,10 +21,13 @@ const INITIAL_FILTER = {
 }
 const useFilters = ()=>{
 
-     const [filters, setFilters] = useState({
-      technology:'',
-      location: '',
-      experienceLevel: ''
+     const [filters, setFilters] = useState(()=>{
+      const params = new URLSearchParams(window.location.pathname)
+      return{
+      technology:params.get('technology')||'',
+      location: params.get('location')||'',
+      experienceLevel: params.get('experienceLevel')||''
+    }
   })
 
   const hasActiveFilters = (filters)=>{
@@ -31,12 +35,21 @@ const useFilters = ()=>{
   }
   const activeFilters = hasActiveFilters(filters)
   
-  const [textToFilter, setTextToFilter] = useState('')
-  const [currentPage, setCurrentPage] = useState(1)
+  const [textToFilter, setTextToFilter] = useState(()=>{
+    const params = new URLSearchParams(window.location.search)
+    return params.get('text') || ''
+  })
+  const [currentPage, setCurrentPage] = useState(()=>{
+    const params = new URLSearchParams(window.location.search)
+    const page = Number(params.get('page'))
+    return Number.isNaN(page)?page:1
+    }
+  )
   const [jobs,setJobs] = useState([])
   const [total,setTotal]= useState(0)
   const [loading,setLoading] =useState(true)
-  const [errors , setErrors] = useState(null)
+  const [errors ,setErrors] = useState(null)
+  const {navigateTo} = useRouter()
   useEffect(()=>{
     async function fetchJobs() {
       try{
@@ -69,6 +82,19 @@ const useFilters = ()=>{
     fetchJobs()
     //  ->  Queda adentro para evitar que se llene desde otro lado
   },[filters,textToFilter,currentPage])
+
+  useEffect(()=>{
+    const params = new URLSearchParams()
+        if(textToFilter)params.append('text',textToFilter)
+        if(filters.technology)params.append('technology',filters.technology)
+        if(filters.location)params.append('type',filters.location)
+        if(filters.experienceLevel)params.append('level',filters.experienceLevel)
+        
+          if(currentPage > 1 )params.append('page',currentPage)
+
+            const newUrl = params.toString() ? `${window.location.pathname}?${params.toString()}`:window.location.pathname;
+            navigateTo(newUrl)
+  },[filters,textToFilter,currentPage,navigateTo])
 
   const totalPages = Math.ceil(total / RESULT_PER_PAGE)
   
@@ -114,7 +140,8 @@ const useFilters = ()=>{
     handleTextFilter,
     handleClearFilters,
     activeFilters,
-    errors
+    errors,
+    textToFilter
   }
   
 }
@@ -132,7 +159,8 @@ function SearchPage() {
     handleTextFilter,
     handleClearFilters,
     activeFilters,
-    errors
+    errors,
+    textToFilter
   } = useFilters()
 
 
@@ -178,7 +206,7 @@ function SearchPage() {
 
   <main>
     <title>{title()}</title>
-    <SearchFormSection onSearch={handleSearch} onTextFilter={handleTextFilter} activeFilters={activeFilters} onClearFilters={handleClearFilters}></SearchFormSection>
+    <SearchFormSection initialText={textToFilter} onSearch={handleSearch} onTextFilter={handleTextFilter} activeFilters={activeFilters} onClearFilters={handleClearFilters}></SearchFormSection>
     
     <section>
       {/* jobs={jobs.data} -> Tiene los empleos */}

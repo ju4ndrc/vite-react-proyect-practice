@@ -52,7 +52,7 @@ const useSearchForm = ({idText,idTechnology, idLocation , idExperienceLevel ,onS
   }
 }
 
-export default function SearchFormSection({onSearch, onTextFilter, onClearFilters,activeFilters}){
+export default function SearchFormSection({onSearch, onTextFilter, onClearFilters,activeFilters,initialText}){
   const idText = useId()
   const idTechnology = useId()
   const idLocation = useId()
@@ -91,7 +91,7 @@ export default function SearchFormSection({onSearch, onTextFilter, onClearFilter
           </svg>
 
           <input 
-            
+            defaultValue={initialText}
             onFocus={()=>setFocusedField('search')}
             onBlur={()=> setFocusedField(null)}
             className={focusedField === 'search' ? 'input-focused':''}
