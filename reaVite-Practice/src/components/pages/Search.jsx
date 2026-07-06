@@ -22,7 +22,7 @@ const INITIAL_FILTER = {
 const useFilters = ()=>{
 
      const [filters, setFilters] = useState(()=>{
-      const params = new URLSearchParams(window.location.pathname)
+      const params = new URLSearchParams(window.location.search)
       return{
       technology:params.get('technology')||'',
       location: params.get('location')||'',
