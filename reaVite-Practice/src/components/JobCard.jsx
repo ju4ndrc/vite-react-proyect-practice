@@ -1,6 +1,7 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
-
+import Link from "./Link"
+import styles from './JobCard.module.css'
 
 export function JobCard({ job }) {
 
@@ -21,12 +22,17 @@ export function JobCard({ job }) {
       data-technology={job.data.technology}
     >
       <div>
-        <h3>{job.titulo}</h3>
+        <Link className={styles.title} href={`/job/${job.titulo}`} >
+          {job.titulo
+
+          }
+        </Link>
         <small>
           {job.empresa} | {job.ubicacion}
         </small>
         <p>{job.descripcion}</p>
       </div>
+      <Link href={`/jobs/${job.id}`} className={styles.actions}>Ver detalles</Link>
       <button onClick={handleApplyClick} className={buttonClasses}>{buttonText}</button>
       
     </article>

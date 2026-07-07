@@ -1,0 +1,9 @@
+.title:hover{
+    text-decoration: underline;
+}
+.actions{
+    gap :1 px;
+    &:hover{
+        text-decoration: underline;
+    }
+}

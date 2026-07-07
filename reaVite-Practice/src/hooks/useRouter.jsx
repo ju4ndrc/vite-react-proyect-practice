@@ -1,30 +1,17 @@
-import { useEffect , useState } from "react"
 
+import { useLocation, useNavigate } from "react-router"
 export default function useRouter(){
     
-      const [currentPath ,setCurrentPath]=  useState(window.location.pathname)
-
-  useEffect(()=>{
-  
-    const handleLocationChange = () => {
-      setCurrentPath(window.location.pathname)
-    }
-  
-    window.addEventListener('popstate',handleLocationChange)
-  
-    return ()=>{
-      window.removeEventListener('popstate',handleLocationChange)
-    }
-  },[])
-
+    const location = useLocation()
+    const navigate = useNavigate()
+    
   {/*Nos permite navigar de forma pragmatica al hacer submit en formulario*/}
   function navigateTo(path){
-    window.history.pushState({},"",path)
-    window.dispatchEvent(new PopStateEvent('popstate'))
+    navigate(path)
   }
 
   return{
-    currentPath,
+    currentPath:location.path,
     navigateTo
   }
 }

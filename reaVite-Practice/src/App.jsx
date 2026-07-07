@@ -7,7 +7,7 @@ import { Routes,Route } from 'react-router'
 import HomePage from './components/pages/Home.jsx'
 import SearchPage from './components/pages/Search.jsx'
 import NotFoundPage from './components/pages/404.jsx'
-
+import JobDetail from './components/pages/Detail.jsx'
 import {Toaster} from 'react-hot-toast'
 
 function App() {
@@ -25,6 +25,7 @@ function App() {
       <Route path='/search' element={<SearchPage/>}/>
       <Route path='*' element={<NotFoundPage/>} />
       <Route path='/contact' element={<Contact/> }/>
+      <Route path='/jobs/:jobId' element={<JobDetail/>} />
     </Routes>
     <Footer/>
 

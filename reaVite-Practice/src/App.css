@@ -501,3 +501,29 @@ article {
 .nav-link.active::after {
   width: 100%;
 }
+
+
+/* Iconos para listas */
+.prose ul li::marker {
+  content: "✓ ";
+  color: #3b82f6;
+  font-weight: bold;
+}
+
+.nav-link-active {
+  color: yellow;
+  pointer-events: none;
+}
+@media (max-width: 640px) {
+  .prose {
+    font-size: 0.9375rem; /* 15px en móviles */
+  }
+
+  .prose h2 {
+    font-size: 1.25rem;
+  }
+
+  .prose h3 {
+    font-size: 1.125rem;
+  }
+}
