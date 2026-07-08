@@ -36,7 +36,7 @@ export default function JobDetail(){
     const [loading,setLoading] = useState(true)
     const [error , setError] = useState(null)
     useEffect(()=>{
-        console.log(jobId)
+        
         if(!jobId){
             return
         }
@@ -54,7 +54,7 @@ export default function JobDetail(){
                 return response.json()
         })
         .then(json=>{
-            console.log(json)
+            
             if(json) {
                 setJob(json)
             }

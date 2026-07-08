@@ -1,4 +1,4 @@
-import {JobCard} from './JobCard.jsx'
+import JobCard from './JobCard.jsx'
 
 
 export default function JobListings({jobs}){

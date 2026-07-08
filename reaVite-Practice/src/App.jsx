@@ -1,14 +1,20 @@
-
+import {lazy,Suspense} from 'react'
+import { Routes,Route } from 'react-router'
+import {Toaster} from 'react-hot-toast'
 
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
-import Contact from './components/pages/Contact.jsx'
-import { Routes,Route } from 'react-router'
-import HomePage from './components/pages/Home.jsx'
-import SearchPage from './components/pages/Search.jsx'
-import NotFoundPage from './components/pages/404.jsx'
-import JobDetail from './components/pages/Detail.jsx'
-import {Toaster} from 'react-hot-toast'
+
+
+
+
+const HomePage = lazy(()=>import('./components/pages/Home.jsx'))
+const SearchPage = lazy(()=>import('./components/pages/Search.jsx'))
+const NotFoundPage = lazy(()=>import('./components/pages/404.jsx'))
+const Contact = lazy(()=>import('./components/pages/Contact.jsx'))
+const JobDetail = lazy(()=>import('./components/pages/Detail.jsx'))
+
+
 
 function App() {
 

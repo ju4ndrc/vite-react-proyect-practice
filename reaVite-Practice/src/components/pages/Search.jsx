@@ -145,7 +145,7 @@ const useFilters = ()=>{
   
 }
 
-function SearchPage() {
+export default function SearchPage() {
   
   const {
     loading,
@@ -224,4 +224,4 @@ function SearchPage() {
   )
 }
 
-export default SearchPage
+

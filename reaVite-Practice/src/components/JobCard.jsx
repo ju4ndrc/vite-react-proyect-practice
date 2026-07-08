@@ -3,7 +3,7 @@ import toast from "react-hot-toast"
 import Link from "./Link"
 import styles from './JobCard.module.css'
 
-export function JobCard({ job }) {
+export default function JobCard({ job }) {
 
   const [isApplied, setIsApplied] = useState(false)
 
@@ -39,4 +39,3 @@ export function JobCard({ job }) {
   )
 }
 
-export default JobCard
