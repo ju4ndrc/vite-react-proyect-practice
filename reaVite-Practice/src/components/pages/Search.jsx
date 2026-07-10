@@ -21,6 +21,8 @@ const INITIAL_FILTER = {
 }
 const useFilters = ()=>{
      const [searchParams, setSearchParams] = useSearchParams() 
+
+
      const [filters, setFilters] = useState(()=>{
       return{
       technology:searchParams.get('technology')||'',
@@ -34,7 +36,8 @@ const useFilters = ()=>{
   }
   const activeFilters = hasActiveFilters(filters)
   
-  const [textToFilter, setTextToFilter] = useState(()=>{()=>searchParams.get('text') || ''})
+  const [textToFilter, setTextToFilter] = useState(()=>searchParams.get('text') || '')
+
   const [currentPage, setCurrentPage] = useState(()=>{
     const params = new URLSearchParams(window.location.search)
     const page = Number(params.get('page'))
@@ -140,7 +143,8 @@ const useFilters = ()=>{
     handleClearFilters,
     activeFilters,
     errors,
-    textToFilter
+    textToFilter,
+    filters
   }
   
 }
@@ -159,7 +163,8 @@ export default function SearchPage() {
     handleClearFilters,
     activeFilters,
     errors,
-    textToFilter
+    textToFilter,
+    filters
   } = useFilters()
 
 
@@ -205,7 +210,7 @@ export default function SearchPage() {
 
   <main>
     <title>{title()}</title>
-    <SearchFormSection initialText={textToFilter} onSearch={handleSearch} onTextFilter={handleTextFilter} activeFilters={activeFilters} onClearFilters={handleClearFilters}></SearchFormSection>
+    <SearchFormSection initialText={textToFilter} initialFilters={filters} onSearch={handleSearch} onTextFilter={handleTextFilter} activeFilters={activeFilters} onClearFilters={handleClearFilters}></SearchFormSection>
     
     <section>
       {/* jobs={jobs.data} -> Tiene los empleos */}

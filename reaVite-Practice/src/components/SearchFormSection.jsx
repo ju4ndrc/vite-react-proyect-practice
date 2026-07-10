@@ -12,7 +12,7 @@ const useSearchForm = ({idText,idTechnology, idLocation , idExperienceLevel ,onS
 
     const formData = new FormData(event.currentTarget) //Se instancia FormData y Este es para capturar los datos del formulario principal
     
-    if(event.target.name === idText) return 
+
 
     const filters = {
       search : formData.get(idText),
@@ -52,7 +52,7 @@ const useSearchForm = ({idText,idTechnology, idLocation , idExperienceLevel ,onS
   }
 }
 
-export default function SearchFormSection({onSearch, onTextFilter, onClearFilters,activeFilters,initialText}){
+export default function SearchFormSection({onSearch, onTextFilter, activeFilters,initialText,initialFilters}){
   const idText = useId()
   const idTechnology = useId()
   const idLocation = useId()
@@ -70,8 +70,8 @@ export default function SearchFormSection({onSearch, onTextFilter, onClearFilter
     } = useSearchForm({idTechnology,idLocation,idText,idExperienceLevel,onSearch,onTextFilter})
     const handleClearInput = (event)=>{
       event.preventDefault()
-      clearRef.current.reset()
-      onClearFilters()
+      clearRef.current.value = ''
+      onTextFilter('')
 
     }
   
@@ -80,7 +80,7 @@ export default function SearchFormSection({onSearch, onTextFilter, onClearFilter
       <h1>Encuentra tu próximo trabajo</h1>
       <p>Explora miles de oportunidades en el sector tecnológico.</p>
 
-      <form ref={clearRef} onChange={handleSubmit} id="empleos-search-form" role="search">
+      <form  onChange={handleSubmit} id="empleos-search-form" role="search">
         <div className="search-bar">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"
@@ -92,6 +92,7 @@ export default function SearchFormSection({onSearch, onTextFilter, onClearFilter
 
           <input 
             defaultValue={initialText}
+            ref={clearRef}
             onFocus={()=>setFocusedField('search')}
             onBlur={()=> setFocusedField(null)}
             className={focusedField === 'search' ? 'input-focused':''}
@@ -106,7 +107,7 @@ export default function SearchFormSection({onSearch, onTextFilter, onClearFilter
         </div>
 
         <div className="search-filters">
-          <select name={idTechnology} id="filter-technology">
+          <select name={idTechnology} id="filter-technology" defaultValue={initialFilters.technology}>
             <option value="">Tecnología</option>
             <optgroup label="Tecnologías populares">
               <option value="javascript">JavaScript</option>
@@ -124,7 +125,7 @@ export default function SearchFormSection({onSearch, onTextFilter, onClearFilter
             <option value="php">PHP</option>
           </select>
 
-          <select name={idLocation} id="filter-location">
+          <select name={idLocation} id="filter-location" defaultValue={initialFilters.location}>
             <option value="">Ubicación</option>
             <option value="remoto">Remoto</option>
             <option value="cdmx">Ciudad de México</option>
@@ -133,7 +134,7 @@ export default function SearchFormSection({onSearch, onTextFilter, onClearFilter
             <option value="barcelona">Barcelona</option>
           </select>
 
-          <select name={idExperienceLevel} id="filter-experience-level">
+          <select name={idExperienceLevel} id="filter-experience-level" defaultValue={initialFilters}>
             <option value="">Nivel de experiencia</option>
             <option value="junior">Junior</option>
             <option value="mid">Mid-level</option>
@@ -141,7 +142,7 @@ export default function SearchFormSection({onSearch, onTextFilter, onClearFilter
             <option value="lead">Lead</option>
           </select>
           
-            { activeFilters &&
+            { activeFilters, onTextFilter &&
             (<button type="button" className="btn-secondary" onClick={handleClearInput} >Limipiar Filtros</button>)}
             
         </div>
