@@ -1,8 +1,8 @@
-import {lazy,Suspense, useState} from 'react'
+import {lazy,Suspense} from 'react'
 import { Routes,Route } from 'react-router'
 import {Toaster} from 'react-hot-toast'
 
-import Header from './components/Header.jsx'
+import {Header} from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 
 
@@ -18,21 +18,12 @@ const JobDetail = lazy(()=>import('./components/pages/Detail.jsx'))
 
 function App() {
 
-  const [isLoggedIn, setIsloggedIn]= useState(false)
 
-
-  const handleLogin = () => {
-    setIsloggedIn(true)
-  }
-
-  const handleLogout=()=>{
-    setIsloggedIn(false)
-  }
 
   return (
     <>
     <Toaster position='top-center'></Toaster>
-    <Header isLoggedIn={isLoggedIn} onLogin={handleLogin} onLogout={handleLogout} />
+    <Header  />
 
     <Suspense>
       <Routes>
@@ -40,7 +31,7 @@ function App() {
         <Route path='/search' element={<SearchPage/>}/>
         <Route path='*' element={<NotFoundPage/>} />
         <Route path='/contact' element={<Contact/> }/>
-        <Route path='/jobs/:jobId' element={<JobDetail isLoggedIn={isLoggedIn} />} />
+        <Route path='/jobs/:jobId' element={<JobDetail />} />
       </Routes>
       <Footer/>
     </Suspense>

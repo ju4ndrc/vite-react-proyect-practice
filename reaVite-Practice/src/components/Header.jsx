@@ -1,30 +1,66 @@
 import { NavLink } from "react-router"
-import Link from "./Link"
-function Header(){
-    return(
-          <header>
-          <Link href='/' >
-              <h1>
-                <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
-                  viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                  <polyline points="16 18 22 12 16 6"></polyline>
-                  <polyline points="8 6 2 12 8 18"></polyline>
-                </svg>
-                DevJobs
-          </h1>
-      </Link>
-    <nav>
-      <NavLink  to="/contact" className={({isActive})=>isActive?'nav-link-active':''}>
-        Contacto
-      </NavLink> 
-      <NavLink to="/search"  className={({isActive})=>isActive?'nav-link-active':''}>
-      Empleos
-      </NavLink>
-    </nav>
+import {Link} from "./Link.jsx"
 
-    
-  </header>
-    )
+import { useAuthStore } from "../store/authStore.js"
+
+import { useFavoritesStore } from "../store/favoritesStore.js"
+
+export function Header(){
+
+  const {isLoggedIn} = useAuthStore()
+
+  const {countFavorites} = useFavoritesStore()
+  const numberOfFavorites = countFavorites()
+  console.log('countFavorites',countFavorites())
+  console.log('useFavoritesStore',useFavoritesStore())
+  console.log('numberOfFavorites',numberOfFavorites)
+  return(
+      <header>
+              <Link to='/' >
+                  <h1>
+                    <svg fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                      viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <polyline points="16 18 22 12 16 6"></polyline>
+                      <polyline points="8 6 2 12 8 18"></polyline>
+                    </svg>
+                    DevJobs
+              </h1>
+          </Link>
+          
+      <nav>
+
+          <NavLink  to="/contact" className={({isActive})=>isActive?'nav-link-active':''}>
+            Contacto
+          </NavLink> 
+          
+          <NavLink to="/search"  className={({isActive})=>isActive?'nav-link-active':''}>
+          Empleos
+          </NavLink>
+
+            {
+              isLoggedIn  &&(
+                <NavLink to="/profile"  className={({isActive})=>isActive?'nav-link-active':''}> Profile ❤️{numberOfFavorites} </NavLink>           
+                )
+            }
+
+
+      </nav>
+
+        <HeaderUserButton/>
+
+        
+    </header>
+  )
 }
 
-export default Header
+
+const HeaderUserButton=()=>{
+  
+  const {isLoggedIn,login, logout} = useAuthStore()
+  
+  return(  isLoggedIn ? <button onClick={logout} > Cerrar sesion </button> :
+    <button onClick={login} > Iniciar Sesion </button>
+  )
+
+      
+}

@@ -1,11 +1,14 @@
 import { useState } from "react"
 import toast from "react-hot-toast"
-import Link from "./Link"
+import {Link} from "./Link"
 import styles from './JobCard.module.css'
+import { useFavoritesStore } from "../store/favoritesStore.js"
 
 export default function JobCard({ job }) {
 
   const [isApplied, setIsApplied] = useState(false)
+
+  const {toggleFavorite, isFavorite} = useFavoritesStore()
 
   const handleApplyClick = ( ) =>{
     setIsApplied(true)
@@ -33,6 +36,7 @@ export default function JobCard({ job }) {
         <p>{job.descripcion}</p>
       </div>
       <Link href={`/jobs/${job.id}`} className={styles.actions}>Ver detalles</Link>
+      <button onClick={()=> toggleFavorite(job.id)}>  {isFavorite(job.id)?'❤️':'🤍'}  </button>
       <button onClick={handleApplyClick} className={buttonClasses}>{buttonText}</button>
       
     </article>
