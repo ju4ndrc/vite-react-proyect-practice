@@ -3,28 +3,38 @@ import toast from "react-hot-toast"
 import {Link} from "./Link"
 import styles from './JobCard.module.css'
 import { useFavoritesStore } from "../store/favoritesStore.js"
+import { useAuthStore } from "../store/authStore.js"
 
 function JobCardFavoriteButton({jobId}){
-  
-  const isFavorite = useFavoritesStore((state)=>state.isFavorite)
-  const toggleFavorite = useFavoritesStore((state)=>state.toggleFavorite)
+  const {toggleFavorite, isFavorite} = useFavoritesStore()
+  const {isLoggedIn} = useAuthStore()
   return(
-    <button onClick={()=> toggleFavorite(jobId)}>  {isFavorite(jobId)?'❤️':'🤍'}  </button>
+    <button disabled={!isLoggedIn} onClick={()=> toggleFavorite(jobId)}>  {isFavorite(jobId)?'❤️':'🤍'}  </button>
   )
 }
 
-export default function JobCard({ job }) {
+function JobCardApplyButton({jobId}){
 
   const [isApplied, setIsApplied] = useState(false)
+  const {isLoggedIn} = useAuthStore()
 
-  
+  const buttonClasses = isApplied ? 'button-apply-job is-applied': 'button-apply-job'
+  const buttonText = isApplied ? 'Aplicado': 'Aplicar'
 
   const handleApplyClick = ( ) =>{
     setIsApplied(true)
     toast.success('Has Aplicado')
   }
-  const buttonClasses = isApplied ? 'button-apply-job is-applied': 'button-apply-job'
-  const buttonText = isApplied ? 'Aplicado': 'Aplicar'
+
+  return(
+    <button disabled={!isLoggedIn} onClick={handleApplyClick} className={buttonClasses}>{buttonText}</button>
+  )
+}
+
+export default function JobCard({ job }) {
+
+
+
  
   return (
     <article
@@ -46,7 +56,7 @@ export default function JobCard({ job }) {
       </div>
       <Link href={`/jobs/${job.id}`} className={styles.actions}>Ver detalles</Link>
       <JobCardFavoriteButton jobId={job.id} />
-      <button onClick={handleApplyClick} className={buttonClasses}>{buttonText}</button>
+      <JobCardApplyButton jobId={job.id} ></JobCardApplyButton>
       
     </article>
   )

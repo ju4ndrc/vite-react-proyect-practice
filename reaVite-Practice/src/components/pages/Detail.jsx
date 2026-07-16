@@ -3,7 +3,7 @@ import { useParams,useNavigate } from "react-router"
 import styles from './Detail.module.css'
 import snarkdown from 'snarkdown';
 import { ClipLoader } from "react-spinners";
-
+import { useFavoritesStore } from "../../store/favoritesStore.js";
 import { useAuthStore } from "../../store/authStore.js";
 
 
@@ -30,6 +30,16 @@ function JobSection({title,content}){
     )
 
 }
+function DetailFavoriteButton({jobId}){
+
+
+    const {toggleFavorite, isFavorite} = useFavoritesStore()
+    const {isLoggedIn} = useAuthStore()
+      
+    return(
+        <button disabled={!isLoggedIn} onClick={()=> toggleFavorite(jobId)}>  {isFavorite(jobId)?'❤️':'🤍'}  </button>
+    )
+}
 
 function DetailPageBreadCrumb({job}){
     return(
@@ -52,6 +62,7 @@ function DetailPageHeader({job}){
         <p className={styles.location}>{job.location}</p>
       </div>
         <DetailApplyButton/>
+        <DetailFavoriteButton jobId={job.id} ></DetailFavoriteButton>
       
     </header>
     )
@@ -59,7 +70,7 @@ function DetailPageHeader({job}){
 function DetailApplyButton(){
     const {isLoggedIn}= useAuthStore()
     return(
-    <button className={styles.applyButton} disabled={isLoggedIn === true} >  {isLoggedIn === false ? 'Aplicar ahora': 'Iniciar Sesion'} </button>
+    <button className={styles.applyButton} disabled={!isLoggedIn} >  {isLoggedIn ? 'Aplicar ahora': 'Iniciar Sesion'} </button>
     )
 }
 

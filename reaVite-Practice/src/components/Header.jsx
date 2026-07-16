@@ -55,8 +55,13 @@ export function Header(){
 const HeaderUserButton=()=>{
   
   const {isLoggedIn,login, logout} = useAuthStore()
-  
-  return(  isLoggedIn ? <button onClick={logout} > Cerrar sesion </button> :
+  const handleLogout = ()=>{
+    logout()
+    
+    window.location.reload()
+    
+  }
+  return(  isLoggedIn ? <button onClick={handleLogout} > Cerrar sesion </button> :
     <button onClick={login} > Iniciar Sesion </button>
   )
 
