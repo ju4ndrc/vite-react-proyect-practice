@@ -9,11 +9,9 @@ export function Header(){
 
   const {isLoggedIn} = useAuthStore()
 
-  const {countFavorites} = useFavoritesStore()
-  const numberOfFavorites = countFavorites()
-  console.log('countFavorites',countFavorites())
-  console.log('useFavoritesStore',useFavoritesStore())
-  console.log('numberOfFavorites',numberOfFavorites)
+  const favorites = useFavoritesStore(state => state.favorites)
+
+
   return(
       <header>
               <Link to='/' >
@@ -39,7 +37,7 @@ export function Header(){
 
             {
               isLoggedIn  &&(
-                <NavLink to="/profile"  className={({isActive})=>isActive?'nav-link-active':''}> Profile ❤️{numberOfFavorites} </NavLink>           
+                <NavLink to="/profile"  className={({isActive})=>isActive?'nav-link-active':''}> Profile ❤️{favorites.length} </NavLink>           
                 )
             }
 

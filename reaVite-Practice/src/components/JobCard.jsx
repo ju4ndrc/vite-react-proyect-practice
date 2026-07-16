@@ -4,11 +4,20 @@ import {Link} from "./Link"
 import styles from './JobCard.module.css'
 import { useFavoritesStore } from "../store/favoritesStore.js"
 
+function JobCardFavoriteButton({jobId}){
+  
+  const isFavorite = useFavoritesStore((state)=>state.isFavorite)
+  const toggleFavorite = useFavoritesStore((state)=>state.toggleFavorite)
+  return(
+    <button onClick={()=> toggleFavorite(jobId)}>  {isFavorite(jobId)?'❤️':'🤍'}  </button>
+  )
+}
+
 export default function JobCard({ job }) {
 
   const [isApplied, setIsApplied] = useState(false)
 
-  const {toggleFavorite, isFavorite} = useFavoritesStore()
+  
 
   const handleApplyClick = ( ) =>{
     setIsApplied(true)
@@ -36,7 +45,7 @@ export default function JobCard({ job }) {
         <p>{job.descripcion}</p>
       </div>
       <Link href={`/jobs/${job.id}`} className={styles.actions}>Ver detalles</Link>
-      <button onClick={()=> toggleFavorite(job.id)}>  {isFavorite(job.id)?'❤️':'🤍'}  </button>
+      <JobCardFavoriteButton jobId={job.id} />
       <button onClick={handleApplyClick} className={buttonClasses}>{buttonText}</button>
       
     </article>
